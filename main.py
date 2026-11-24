@@ -28,6 +28,8 @@ def validate(text):
         raise ValueError("entry must not be only whitespace")
     if "\n" in text or "\r" in text:
         raise ValueError("entry must be a single line")
+    if any(ord(ch) < 0x20 and ch not in ("\t",) for ch in text):
+        raise ValueError("entry must not contain control characters")
     if len(text) > MAX_CHARS:
         raise ValueError("entry exceeds %d characters" % MAX_CHARS)
     text.encode("utf-8")
